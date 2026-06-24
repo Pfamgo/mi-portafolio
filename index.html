@@ -457,8 +457,7 @@
       }
 
       // --- EMAILJS ---
-      // Inicializar EmailJS con tu Public Key (reemplaza con tu clave real)
-       emailjs.init('s7HYtIj0NDRGXHA6X');
+      emailjs.init('s7HYtIj0NDRGXHA6X');
 
       const form = document.getElementById('contact-form');
       const status = document.getElementById('form-status');
@@ -467,25 +466,17 @@
         form.addEventListener('submit', function(e) {
           e.preventDefault();
 
-          // Descomenta y configura cuando tengas las credenciales de EmailJS:
-          //
-           emailjs.sendForm('service_uia8n6f', 'template_uwet0ca', this)
+          emailjs.sendForm('service_uia8n6f', 'template_uwet0ca', this)
              .then(function() {
                status.textContent = 'Mensaje enviado con éxito. Gracias!';
                status.classList.remove('hidden', 'text-red-400');
                status.classList.add('text-green-400');
                form.reset();
-             })
-             function(err) {
+             }, function(err) {
                status.textContent = 'Error al enviar. Intenta de nuevo.';
                status.classList.remove('hidden', 'text-green-400');
                status.classList.add('text-red-400');
              });
-
-          // Placeholder mientras configuras EmailJS:
-          // status.textContent = 'Configura EmailJS para activar el envío. Revisa el código.';
-          // status.classList.remove('hidden');
-          // setTimeout(function() { status.classList.add('hidden'); }, 4000);
         });
       }
     })();
