@@ -469,18 +469,18 @@
 
           // Descomenta y configura cuando tengas las credenciales de EmailJS:
           //
-          // emailjs.sendForm('TU_SERVICE_ID', 'TU_TEMPLATE_ID', this)
-          //   .then(function() {
-          //     status.textContent = 'Mensaje enviado con éxito. Gracias!';
-          //     status.classList.remove('hidden', 'text-red-400');
-          //     status.classList.add('text-green-400');
-          //     form.reset();
-          //   })
-          //   function(err) {
-          //     status.textContent = 'Error al enviar. Intenta de nuevo.';
-          //     status.classList.remove('hidden', 'text-green-400');
-          //     status.classList.add('text-red-400');
-          //   });
+           emailjs.sendForm('service_uia8n6f', 'service_uia8n6f', this)
+             .then(function() {
+               status.textContent = 'Mensaje enviado con éxito. Gracias!';
+               status.classList.remove('hidden', 'text-red-400');
+               status.classList.add('text-green-400');
+               form.reset();
+             })
+             function(err) {
+               status.textContent = 'Error al enviar. Intenta de nuevo.';
+               status.classList.remove('hidden', 'text-green-400');
+               status.classList.add('text-red-400');
+             });
 
           // Placeholder mientras configuras EmailJS:
           status.textContent = 'Configura EmailJS para activar el envío. Revisa el código.';
