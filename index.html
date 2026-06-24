@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portafolio — Lógica y Arquitectura</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Germania+One&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2350ab',
+            secondary: '#2b76c8',
+            accent: '#2b9ec8',
+            'accent-cyan': '#2bc8c8',
+            'text-light': '#bae5e5',
+          },
+          fontFamily: {
+            display: ['Germania One', 'cursive'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #2350ab;
+      color: #bae5e5;
+      font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    }
+    .glass {
+      background: rgba(43, 118, 200, 0.35);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(43, 158, 200, 0.2);
+    }
+    .card {
+      background: rgba(43, 118, 200, 0.25);
+      border: 1px solid rgba(43, 158, 200, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(43, 200, 200, 0.15);
+      border-color: rgba(43, 200, 200, 0.4);
+    }
+    .pill {
+      background: rgba(43, 158, 200, 0.2);
+      color: #bae5e5;
+      border: 1px solid rgba(43, 158, 200, 0.3);
+    }
+    .btn-cta {
+      background: rgba(43, 200, 200, 0.15);
+      border: 1px solid #2bc8c8;
+      color: #2bc8c8;
+      transition: all 0.2s ease;
+    }
+    .btn-cta:hover {
+      background: #2bc8c8;
+      color: #2350ab;
+    }
+    .btn-outline {
+      border: 1px solid rgba(186, 229, 229, 0.4);
+      color: #bae5e5;
+      transition: all 0.2s ease;
+    }
+    .btn-outline:hover {
+      border-color: #bae5e5;
+      background: rgba(186, 229, 229, 0.1);
+    }
+    .input-field {
+      background: rgba(43, 118, 200, 0.25);
+      border: 1px solid rgba(43, 158, 200, 0.3);
+      color: #bae5e5;
+      transition: border-color 0.2s ease;
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: #2bc8c8;
+      box-shadow: 0 0 0 2px rgba(43, 200, 200, 0.2);
+    }
+    .input-field::placeholder {
+      color: rgba(186, 229, 229, 0.4);
+    }
+    .skill-chip {
+      background: rgba(43, 118, 200, 0.3);
+      border: 1px solid rgba(43, 158, 200, 0.25);
+      transition: all 0.2s ease;
+    }
+    .skill-chip:hover {
+      border-color: #2bc8c8;
+      background: rgba(43, 200, 200, 0.1);
+    }
+    .nav-link {
+      position: relative;
+      color: rgba(186, 229, 229, 0.7);
+      transition: color 0.2s ease;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #2bc8c8;
+      transition: width 0.2s ease;
+    }
+    .nav-link:hover {
+      color: #bae5e5;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    @media (max-width: 767px) {
+      .nav-menu {
+        display: none;
+      }
+      .nav-menu.open {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== NAVBAR ====== -->
+  <nav class="fixed top-0 left-0 w-full z-50 glass">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <a href="#" class="font-display text-2xl text-[#2bc8c8] tracking-wide">Portafolio</a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a href="#hero" class="nav-link">Inicio</a>
+        <a href="#proyectos" class="nav-link">Proyectos</a>
+        <a href="#habilidades" class="nav-link">Habilidades</a>
+        <a href="#contacto" class="nav-link">Contacto</a>
+      </div>
+      <button id="menu-btn" class="md:hidden text-[#bae5e5] focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden flex-col items-center gap-4 pb-4 text-sm font-medium">
+      <a href="#hero" class="nav-link">Inicio</a>
+      <a href="#proyectos" class="nav-link">Proyectos</a>
+      <a href="#habilidades" class="nav-link">Habilidades</a>
+      <a href="#contacto" class="nav-link">Contacto</a>
+    </div>
+  </nav>
+
+  <!-- ====== HERO ====== -->
+  <section id="hero" class="min-h-screen flex items-center justify-center px-4 pt-16">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight text-[#bae5e5]">
+        Transformo ideas complejas en<br>
+        <span class="text-[#2bc8c8]">código eficiente</span> y soluciones de arquitectura.
+      </h1>
+      <p class="mt-6 text-base sm:text-lg text-[#bae5e5]/80 max-w-2xl mx-auto leading-relaxed">
+        Desarrollo backend, estructuras de datos y algoritmos optimizados.
+        Enfoque <span class="text-[#2bc8c8] font-semibold">logic-first</span> sin dependencias pesadas.
+        Código limpio, medible y mantenible.
+      </p>
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#proyectos" class="btn-cta px-8 py-3 rounded-lg font-display text-lg tracking-wide">
+          Ver Proyectos de Lógica
+        </a>
+        <a href="#contacto" class="btn-outline px-8 py-3 rounded-lg font-display text-lg tracking-wide">
+          Contacto Directo
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== PROYECTOS ====== -->
+  <section id="proyectos" class="py-20 px-4">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="font-display text-3xl sm:text-4xl text-center text-[#2bc8c8] mb-4">
+        Proyectos de Lógica y Arquitectura
+      </h2>
+      <p class="text-center text-[#bae5e5]/70 max-w-xl mx-auto mb-12">
+        Conceptos abstractos que demuestran capacidad de resolución de problemas,
+        optimización y diseño de sistemas.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+
+        <!-- Card 1: Data Matching Engine -->
+        <div class="card rounded-2xl p-6 flex flex-col">
+          <div class="flex items-center gap-3 mb-4">
+            <svg class="w-8 h-8 text-[#2bc8c8]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+            <h3 class="font-display text-xl text-[#2b9ec8]">Data Matching Engine</h3>
+          </div>
+          <p class="text-sm text-[#bae5e5]/80 leading-relaxed mb-4 flex-1">
+            Algoritmo optimizado para comparar y unificar bases de datos masivas en milisegundos,
+            detectando duplicados mediante distancia de Levenshtein de manera asíncrona.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="pill px-3 py-1 rounded-full text-xs font-medium">JavaScript</span>
+            <span class="pill px-3 py-1 rounded-full text-xs font-medium">Algoritmos</span>
+            <span class="pill px-3 py-1 rounded-full text-xs font-medium">Data Structures</span>
+            <span class="pill px-3 py-1 rounded-full text-xs font-medium">Git</span>
+          </div>
+          <div class="flex gap-3">
+            <a href="#" class="btn-cta px-4 py-2 rounded-lg text-xs font-medium">Ver Documentación API</a>
+            <a href="#" class="btn-outline px-4 py-2 rounded-lg text-xs font-medium">Ver Repositorio</a>
+          </div>
+        </div>
+
+        <!-- Card 2: CLI Physics Sandbox -->
+        <div class="card rounded-2xl p-6 flex flex-col">
+          <div class="flex items-center gap-3 mb-4">
+            <svg class="w-8 h-8 text-[#2bc8c8]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <h3 class="font-display text-xl text-[#2b9ec8]">CLI Physics Sandbox</h3>
+          </div>
+          <p class="text-sm text-[#bae5e5]/80 leading-relaxed mb-4 flex-1">
+            Motor de cálculo bidimensional que procesa vectores de colisión, fuerza de gravedad
+            y coeficientes de restitución elástica, exportando matrices de estado en JSON.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="pill px-3 py-1 rounded-full text-xs font-medium">JavaScript</span>
+            <span class="pill px-3 py-1 rounded-full text-xs font-medium">Matemáticas</span>
+            <span class="pill px-3 py-1 rounded-full text-xs font-medium">Física</span>
+            <span class="pill px-3 py-1 rounded-full text-xs font-medium">JSON</span>
+          </div>
+          <div class="flex gap-3">
+            <a href="#" class="btn-cta px-4 py-2 rounded-lg text-xs font-medium">Ver Specs Técnicos</a>
+            <a href="#" class="btn-outline px-4 py-2 rounded-lg text-xs font-medium">Ver Repositorio</a>
+          </div>
+        </div>
+
+        <!-- Card 3: State Machine Parser -->
+        <div class="card rounded-2xl p-6 flex flex-col">
+          <div class="flex items-center gap-3 mb-4">
+            <svg class="w-8 h-8 text-[#2bc8c8]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+            </svg>
+            <h3 class="font-display text-xl text-[#2b9ec8]">State Machine Parser</h3>
+          </div>
+          <p class="text-sm text-[#bae5e5]/80 leading-relaxed mb-4 flex-1">
+            Extractor y parseador basado en una máquina de estados finitos (FSM) que valida
+            arquitecturas complejas de datos estructurados de manera determinista, sin dependencias.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="pill px-3 py-1 rounded-full text-xs font-medium">JavaScript</span>
+            <span class="pill px-3 py-1 rounded-full text-xs font-medium">Regex</span>
+            <span class="pill px-3 py-1 rounded-full text-xs font-medium">CS</span>
+          </div>
+          <div class="flex gap-3">
+            <a href="#" class="btn-cta px-4 py-2 rounded-lg text-xs font-medium">Ver Arquitectura</a>
+            <a href="#" class="btn-outline px-4 py-2 rounded-lg text-xs font-medium">Ver Repositorio</a>
+          </div>
+        </div>
+
+        <!-- Card 4: In-Memory Cache Manager -->
+        <div class="card rounded-2xl p-6 flex flex-col">
+          <div class="flex items-center gap-3 mb-4">
+            <svg class="w-8 h-8 text-[#2bc8c8]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 3"/>
+            </svg>
+            <h3 class="font-display text-xl text-[#2b9ec8]">In-Memory Cache Manager</h3>
+          </div>
+          <p class="text-sm text-[#bae5e5]/80 leading-relaxed mb-4 flex-1">
+            Sistema de gestión de memoria temporal con política de expiración LRU (Least Recently Used),
+            optimizado para tiempos de respuesta en consultas de alta complejidad.
+          </p>
+          <div class="flex flex-wrap gap-2 mb-5">
+            <span class="pill px-3 py-1 rounded-full text-xs font-medium">JavaScript</span>
+            <span class="pill px-3 py-1 rounded-full text-xs font-medium">Optimización</span>
+            <span class="pill px-3 py-1 rounded-full text-xs font-medium">Arquitectura</span>
+          </div>
+          <div class="flex gap-3">
+            <a href="#" class="btn-cta px-4 py-2 rounded-lg text-xs font-medium">Ver Benchmark</a>
+            <a href="#" class="btn-outline px-4 py-2 rounded-lg text-xs font-medium">Ver Repositorio</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== HABILIDADES ====== -->
+  <section id="habilidades" class="py-20 px-4">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="font-display text-3xl sm:text-4xl text-center text-[#2bc8c8] mb-4">
+        Habilidades Técnicas
+      </h2>
+      <p class="text-center text-[#bae5e5]/70 max-w-xl mx-auto mb-12">
+        Stack principal y dominio técnico para desarrollo backend, algoritmos y arquitectura.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <span class="skill-chip px-5 py-2.5 rounded-full text-sm font-medium">HTML5</span>
+        <span class="skill-chip px-5 py-2.5 rounded-full text-sm font-medium">CSS3 / Responsive Design</span>
+        <span class="skill-chip px-5 py-2.5 rounded-full text-sm font-medium">JavaScript (ES6+)</span>
+        <span class="skill-chip px-5 py-2.5 rounded-full text-sm font-medium">Git & GitHub</span>
+        <span class="skill-chip px-5 py-2.5 rounded-full text-sm font-medium">Estructuras de Datos</span>
+        <span class="skill-chip px-5 py-2.5 rounded-full text-sm font-medium">Optimización de Código</span>
+        <span class="skill-chip px-5 py-2.5 rounded-full text-sm font-medium">JSON / RegEx</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== CONTACTO ====== -->
+  <section id="contacto" class="py-20 px-4">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="font-display text-3xl sm:text-4xl text-center text-[#2bc8c8] mb-4">
+        Contacto
+      </h2>
+      <p class="text-center text-[#bae5e5]/70 max-w-xl mx-auto mb-12">
+        ¿Interesado en mi perfil? Escríbeme directamente o conéctate por redes.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-10 items-start">
+
+        <!-- Formulario -->
+        <form id="contact-form" class="space-y-5">
+          <div>
+            <input
+              type="text"
+              name="name"
+              placeholder="Tu nombre"
+              required
+              class="input-field w-full rounded-lg px-4 py-3 text-sm"
+            >
+          </div>
+          <div>
+            <input
+              type="email"
+              name="email"
+              placeholder="Tu email"
+              required
+              class="input-field w-full rounded-lg px-4 py-3 text-sm"
+            >
+          </div>
+          <div>
+            <textarea
+              name="message"
+              rows="5"
+              placeholder="Tu mensaje"
+              required
+              class="input-field w-full rounded-lg px-4 py-3 text-sm resize-none"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="btn-cta w-full rounded-lg px-6 py-3 font-display text-base tracking-wide"
+          >
+            Enviar Mensaje
+          </button>
+          <p id="form-status" class="text-sm text-center hidden"></p>
+        </form>
+
+        <!-- Redes -->
+        <div class="flex flex-col gap-6">
+          <a href="mailto:tu@email.com"
+             class="flex items-center gap-4 px-5 py-4 rounded-xl card hover:border-[#2bc8c8]/40 transition-all">
+            <svg class="w-6 h-6 text-[#2bc8c8]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+            </svg>
+            <span class="text-sm font-medium">tu@email.com</span>
+          </a>
+
+          <a href="https://linkedin.com/in/tu-perfil" target="_blank" rel="noopener noreferrer"
+             class="flex items-center gap-4 px-5 py-4 rounded-xl card hover:border-[#2bc8c8]/40 transition-all">
+            <svg class="w-6 h-6 text-[#2bc8c8]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+            <span class="text-sm font-medium">LinkedIn</span>
+          </a>
+
+          <a href="https://github.com/tu-usuario" target="_blank" rel="noopener noreferrer"
+             class="flex items-center gap-4 px-5 py-4 rounded-xl card hover:border-[#2bc8c8]/40 transition-all">
+            <svg class="w-6 h-6 text-[#2bc8c8]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            <span class="text-sm font-medium">GitHub</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="py-8 px-4 border-t border-[#2b9ec8]/20">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-[#bae5e5]/50">
+      <p>&copy; 2026 — Todos los derechos reservados.</p>
+      <p>Diseñado con lógica, no con magia.</p>
+    </div>
+  </footer>
+
+  <!-- ====== EMAILJS ====== -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function() {
+      // --- MENÚ MÓVIL ---
+      const menuBtn = document.getElementById('menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', function() {
+          mobileMenu.classList.toggle('hidden');
+          mobileMenu.classList.toggle('flex');
+        });
+        mobileMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            mobileMenu.classList.add('hidden');
+            mobileMenu.classList.remove('flex');
+          });
+        });
+      }
+
+      // --- EMAILJS ---
+      // Inicializar EmailJS con tu Public Key (reemplaza con tu clave real)
+      // emailjs.init('TU_PUBLIC_KEY');
+
+      const form = document.getElementById('contact-form');
+      const status = document.getElementById('form-status');
+
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          // Descomenta y configura cuando tengas las credenciales de EmailJS:
+          //
+          // emailjs.sendForm('TU_SERVICE_ID', 'TU_TEMPLATE_ID', this)
+          //   .then(function() {
+          //     status.textContent = 'Mensaje enviado con éxito. Gracias!';
+          //     status.classList.remove('hidden', 'text-red-400');
+          //     status.classList.add('text-green-400');
+          //     form.reset();
+          //   })
+          //   function(err) {
+          //     status.textContent = 'Error al enviar. Intenta de nuevo.';
+          //     status.classList.remove('hidden', 'text-green-400');
+          //     status.classList.add('text-red-400');
+          //   });
+
+          // Placeholder mientras configuras EmailJS:
+          status.textContent = 'Configura EmailJS para activar el envío. Revisa el código.';
+          status.classList.remove('hidden');
+          setTimeout(function() { status.classList.add('hidden'); }, 4000);
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>
